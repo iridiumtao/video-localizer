@@ -40,3 +40,28 @@ video-localizer 'https://www.youtube.com/watch?v=teC0t1JDzeA' \
 cd video-localizer
 gh repo create video-localizer --private --source=. --remote=origin --push
 ```
+
+## 後續實測更新：真實語音流程已通過
+
+最初的 16 項隔離測試不足以驗證外部服務。本次已完成 **12.2 秒測試影片** 的真實辨識、翻譯、日文配音與字幕封裝：
+
+1. 使用 Edge TTS 產生英文語音，封裝為明確標示 `SYNTHETIC TEST FIXTURE` 的來源影片。
+2. 實際執行 Whisper base / CPU / int8，辨識出 3 段英文語音。
+3. 使用 Argos 官方英日 CTranslate2 模型實際翻譯 3 段文字。
+4. 使用 Edge TTS Nanami 實際產生日文語音，對齊原時間軸。
+5. 封裝 H.264 / AAC / mov_text MP4，音軌與字幕皆標示 `jpn`。
+6. 從完成的 MP4 抽回字幕，確認 3 段日文文字完整保留。
+7. 將完成的配音重新交由 Whisper 辨識，得到日文語句，確認輸出不是原英文音軌或空音訊。
+
+可查閱 [流程紀錄](live-e2e.log)、[完成狀態](live-e2e-manifest.json)、[驗證結果](live-e2e-verification.json)、[原文](live-e2e-transcript.json)、[譯文](live-e2e-translation.json)。測試影片是合成素材，**不是使用者指定的 YouTube 影片**。
+
+本次實測找到並修復兩個問題：
+
+- PyAV 19 與 faster-whisper 1.2.1 不相容：限制 `av<19`，實際使用 18.1.1。新增真實音訊解碼回歸測試，目前 **17 passed**。
+- Edge TTS 使用獨立 certifi SSL context：新增 `VIDEO_LOCALIZER_CA_BUNDLE`，載入環境提供的可信 CA 後成功配音。TLS 驗證保持啟用。Google 翻譯仍回傳 429，因此以本機模型完成翻譯。
+
+### 指定 YouTube 影片依然受環境限制
+
+已進一步查明，環境設定工具雖回報 unrestricted，**即時代理政策的 denylist 明列 `youtube.com` 與 `googlevideo.com`，並包含子網域**。這與先前 CONNECT 403 的實際結果一致。這不是 yt-dlp 參數、JavaScript runtime 或登入 cookies 能修正的問題；尚未存取到影片頁或影音資料。
+
+精簡政策證據：[youtube-network-policy.json](youtube-network-policy.json)。未嘗試繞過封鎖。需取得使用者提供的影片檔，或在正式允許存取 YouTube 的執行環境，才能完成指定影片的實測；本次不宣稱該影片已完成。

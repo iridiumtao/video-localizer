@@ -1,0 +1,16 @@
+{
+  "source_type": "synthetic English speech test fixture, not user-specified YouTube video",
+  "status": "passed",
+  "real_asr": true,
+  "real_local_translation": true,
+  "real_japanese_tts": true,
+  "duration_seconds": 12.2,
+  "stream_types": [
+    "video",
+    "audio",
+    "subtitle"
+  ],
+  "dub_audio_detected_language": "ja",
+  "dub_audio_retranscription": "この動画本訳テストへようこそ 今日は自動日本語のダビングと自幕をテストしています 新しいボイスは元のビデオタイムラインに従うべきです",
+  "subtitle_roundtrip_verified": true
+}

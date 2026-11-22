@@ -74,6 +74,15 @@ def test_failure_manifest(video, tmp_path):
     assert not (output / "localized.mp4").exists()
 
 
+def test_whisper_can_decode_real_audio(video):
+    # PyAV 19 removed metadata_errors, still used by faster-whisper 1.2.1.
+    # Exercise the real decoder to catch incompatible dependency updates.
+    from faster_whisper.audio import decode_audio
+    samples = decode_audio(str(video), sampling_rate=16000)
+    assert abs(len(samples) / 16000 - 4) < .15
+    assert max(abs(samples)) > .01
+
+
 def test_normalize_and_subtitles(tmp_path):
     segments = normalize([Segment(-1, 1, "a\n\nb"), Segment(.5, 3, "日文"), Segment(4, 5, "outside")], 2)
     assert segments == [Segment(0, 1, "a b"), Segment(1, 2, "日文")]

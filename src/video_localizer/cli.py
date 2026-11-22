@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True, help="新的輸出資料夾")
     parser.add_argument("--model", default="small", help="Whisper 模型名稱或本機模型資料夾")
     parser.add_argument("--provider", choices=["free", "openai"], default="free", help="翻譯與配音服務；openai 需 API key，辨識仍在本機")
+    parser.add_argument("--translation-model", type=Path, help="已解壓的 Argos CTranslate2 翻譯模型資料夾（free provider）")
     parser.add_argument("--device", choices=["cpu", "cuda"], default="cpu")
     parser.add_argument("--voice", help="自訂 Edge TTS voice ID")
     parser.add_argument("--cookies", type=Path, help="YouTube Netscape cookies 檔案（不會提交至 Git）")

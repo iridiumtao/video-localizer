@@ -1,0 +1,15 @@
+INFO initialize
+INFO acquire
+INFO transcribe
+INFO Processing audio with duration 00:11.221
+INFO VAD filter removed 00:00.000 of audio
+INFO Detected language 'en' with probability 0.89
+INFO translate
+INFO synthesize
+INFO 配音 1/3
+INFO 配音 2/3
+INFO 配音 3/3
+INFO align
+INFO mux
+INFO completed
+/workspace/video-localizer/outputs/live-e2e-ja-v2/localized.mp4

@@ -1,0 +1,17 @@
+{
+  "source": "/workspace/video-localizer/outputs/live-fixture/english-test.mp4",
+  "language": "ja",
+  "mode": "both",
+  "model": "/workspace/video-localizer/.cache/huggingface/hub/models--Systran--faster-whisper-base/snapshots/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+  "voice": "ja-JP-NanamiNeural",
+  "max_seconds": null,
+  "started_at": "2026-11-22T06:53:03.710232+00:00",
+  "status": "completed",
+  "provider": "free",
+  "translation_model": "/workspace/video-localizer/.cache/argos/en_ja",
+  "stage": "completed",
+  "source_language": "en",
+  "duration": 12.2,
+  "segments": 3,
+  "result": "localized.mp4"
+}

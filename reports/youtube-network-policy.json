@@ -1,0 +1,11 @@
+{
+  "observed_at": "2026-11-22T06:48:27.170722+00:00",
+  "source": "live environment proxy status",
+  "http_mode": "denylist",
+  "relevant_blocked_domains": [
+    "googlevideo.com",
+    "youtube.com"
+  ],
+  "include_subdomains": true,
+  "conclusion": "YouTube acquisition is blocked by the environment proxy, before yt-dlp reaches YouTube."
+}

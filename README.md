@@ -74,3 +74,28 @@ video-localizer './input.mp4' --language ja --mode both \
 ```
 
 此環境沒有 OpenAI API key，官方後端尚未進行連線實測。
+
+## 本機翻譯與代理憑證
+
+Google 翻譯限流時，可用 Argos 官方 CTranslate2 模型離線翻譯。下列英日模型需約 115 MB，模型僅適用英文來源與日文輸出；程式會驗證辨識出的語言是否符合模型。
+
+```bash
+pip install -e '.[local]'
+mkdir -p .cache/argos
+curl -fL https://argos-net.com/v1/translate-en_ja-1_1.argosmodel \
+  -o .cache/argos/en-ja.argosmodel
+python -m zipfile -e .cache/argos/en-ja.argosmodel .cache/argos
+video-localizer './input.mp4' --language ja --mode both \
+  --translation-model .cache/argos/en_ja --output outputs/local-model-ja
+```
+
+若網路使用企業或管理型代理，可將 `VIDEO_LOCALIZER_CA_BUNDLE` 指向其可信 PEM CA 檔案，讓 Edge TTS 在原有信任鏈上載入它；TLS 憑證驗證仍啟用。不要使用來路不明的 CA。
+
+真實外部服務流程測試（合成英文來源影片、實際 Whisper／本機翻譯／日文 TTS）：
+
+```bash
+python scripts/live_smoke.py --translation-model .cache/argos/en_ja \
+  --model base --output outputs/live-smoke
+```
+
+此命令需要 Edge TTS 連線，與不需網路的 `pytest` 測試不同。已完成的實測資料見 [驗證結果](reports/live-e2e-verification.json)。此測試素材並非指定的 YouTube 影片。

@@ -13,11 +13,13 @@ from .providers import LANGUAGES, Providers
 log = logging.getLogger(__name__)
 
 
-def process(source: str, output: Path, language: str = "ja", mode: str = "both", *, providers=None, provider="free", model="small", device="cpu", voice=None, cookies=None, max_seconds: float | None = None) -> Path:
+def process(source: str, output: Path, language: str = "ja", mode: str = "both", *, providers=None, provider="free", model="small", device="cpu", voice=None, cookies=None, max_seconds: float | None = None, translation_model: Path | None = None) -> Path:
     if language not in LANGUAGES or mode not in {"both", "dub", "subtitles"} or provider not in {"free", "openai"}:
         raise ValueError("不支援的語言或輸出模式")
     if max_seconds is not None and (not math.isfinite(max_seconds) or max_seconds <= 0):
         raise ValueError("max-seconds 必須大於零")
+    if translation_model and provider != "free":
+        raise ValueError("本機翻譯模型僅適用於 free provider")
     for binary in ("ffmpeg", "ffprobe"):
         if not shutil.which(binary):
             raise RuntimeError(f"請先安裝 {binary}")
@@ -31,13 +33,14 @@ def process(source: str, output: Path, language: str = "ja", mode: str = "both",
         (output / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
         log.info(stage)
     manifest.update(provider=provider, voice=voice or ("alloy" if provider == "openai" else LANGUAGES[language][0]))
+    manifest["translation_model"] = str(translation_model) if translation_model else None
     try:
         status("initialize")
         if provider == "openai" and providers is None:
             from .openai_provider import OpenAIProviders
             services = OpenAIProviders(model, device, voice)
         else:
-            services = providers or Providers(model, device, voice)
+            services = providers or Providers(model, device, voice, translation_model)
         status("acquire")
         video = acquire(source, output, cookies)
         total = duration(video)

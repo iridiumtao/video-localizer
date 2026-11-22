@@ -1,0 +1,17 @@
+[
+  {
+    "start": 0,
+    "end": 3.2,
+    "text": "Welcome to this video translation test."
+  },
+  {
+    "start": 3.2,
+    "end": 7.6,
+    "text": "Today we are testing automatic Japanese dubbing and subtitles."
+  },
+  {
+    "start": 7.6,
+    "end": 11.2,
+    "text": "The new voice should follow the original video timeline."
+  }
+]
