@@ -65,3 +65,10 @@ gh repo create video-localizer --private --source=. --remote=origin --push
 已進一步查明，環境設定工具雖回報 unrestricted，**即時代理政策的 denylist 明列 `youtube.com` 與 `googlevideo.com`，並包含子網域**。這與先前 CONNECT 403 的實際結果一致。這不是 yt-dlp 參數、JavaScript runtime 或登入 cookies 能修正的問題；尚未存取到影片頁或影音資料。
 
 精簡政策證據：[youtube-network-policy.json](youtube-network-policy.json)。未嘗試繞過封鎖。需取得使用者提供的影片檔，或在正式允許存取 YouTube 的執行環境，才能完成指定影片的實測；本次不宣稱該影片已完成。
+
+## GitHub 上傳完成
+
+後續已由使用者完成 GitHub 裝置授權，成功建立私人 repository：
+https://github.com/iridiumtao/video-localizer
+
+原始碼、測試紀錄與 `examples/` 中明確標示為合成素材的日文配音示範均已推送至 `main`。這不改變指定 YouTube 影片尚未取得的實測狀態。
