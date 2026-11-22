@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "video-localizer"
+version = "0.1.0"
+description = "Translate videos into timed subtitles and synchronized dubbing"
+requires-python = ">=3.11"
+dependencies = ["yt-dlp>=2025.1", "faster-whisper>=1.1,<2", "deep-translator>=1.11,<2", "edge-tts>=7,<8"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+openai = ["openai>=1.60,<3"]
+
+[project.scripts]
+video-localizer = "video_localizer.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
