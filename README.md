@@ -99,3 +99,7 @@ python scripts/live_smoke.py --translation-model .cache/argos/en_ja \
 ```
 
 此命令需要 Edge TTS 連線，與不需網路的 `pytest` 測試不同。已完成的實測資料見 [驗證結果](reports/live-e2e-verification.json)。此測試素材並非指定的 YouTube 影片。
+
+## 日文配音示範
+
+[下載示範 MP4](examples/synthetic-ja-demo.mp4) · [日文 SRT](examples/synthetic-ja-demo.srt)。這是 12.2 秒合成英文來源影片經真實辨識、翻譯與日文配音產生的結果，並非使用者指定的 YouTube 影片。MP4 內含可切換日文字幕軌，建議用 VLC 播放。

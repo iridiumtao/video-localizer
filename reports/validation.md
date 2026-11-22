@@ -30,9 +30,9 @@ video-localizer 'https://www.youtube.com/watch?v=teC0t1JDzeA' \
 
 因此，本報告不宣稱外部服務端到端成功。免費服務需在可連線、具有效憑證且未限流的環境執行；或配置官方 OpenAI API 後端。YouTube 受阻時可改用有權使用的本機影片。
 
-## GitHub：未建立遠端 repo
+## GitHub：初次嘗試未建立遠端 repo（歷史紀錄）
 
-已配置的 `gh` 執行 `gh api user --jq .login` 回傳 `HTTP 401 Bad credentials`。沒有使用無效憑證繼續建立遠端 repo，也沒有推送。需恢復 GitHub 授權後才能發佈。原始碼與本機 Git 歷史均已保留。
+初次嘗試時，已配置的 `gh` 執行 `gh api user --jq .login` 回傳 `HTTP 401 Bad credentials`。沒有使用無效憑證繼續建立遠端 repo，也沒有推送。需恢復 GitHub 授權後才能發佈。原始碼與本機 Git 歷史均已保留。
 
 可於完成授權後自行建立私人遠端：
 
